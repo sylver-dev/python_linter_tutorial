@@ -1,0 +1,33 @@
+id: customRules
+
+language: python
+
+rules:
+    - id: F403
+      severity: warning
+      message: "wildcard import"
+      note: "wildcard imports are discouraged because the programmer often won’t know 
+            where an imported object is defined"
+
+      query: >
+        match WildcardImport
+
+
+
+    - id: E741
+      severity: info
+      message: "ambiguous variable name"
+      note: "variables named I, O and l can be very hard to read"
+
+      query: >
+        match a@Assignment when a.left.text.matches(`^(I|O|l)$`)
+
+
+    - id: W601
+      severity: error
+      message: ".has_key() is deprecated"
+      note: "'.has_key()' was deprecated in Python 2. It is recommended to use the 'in' operator instead"
+
+      query: >
+        match Call(function: Attribute(attribute: 'has_key'))
+
